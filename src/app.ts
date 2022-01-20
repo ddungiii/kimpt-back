@@ -1,7 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 
 import bodyParser from 'body-parser';
-import trainerRoutes from './route/trainer';
+import trainersRoutes from './route/trainers';
+import gymsRoutes from './route/gyms';
 
 const mysql = require('mysql');
 const dbconfig = require('./config/config.ts');
@@ -24,7 +25,8 @@ app.get('/welcome', (req: Request, res: Response, next: NextFunction) => {
     res.send('welcome!');
 });
 
-app.use('/trainer', trainerRoutes);
+app.use('/trainers', trainersRoutes);
+app.use('/gyms', gymsRoutes);
 
 app.listen('443', () => {
     console.log(`

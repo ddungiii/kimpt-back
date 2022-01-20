@@ -46,7 +46,7 @@ const createTrainer = (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-const getALLTrainer = (req: Request, res: Response, next: NextFunction) => {
+const getALLTrainers = (req: Request, res: Response, next: NextFunction) => {
   console.log("Getting all trainer");
 
   let query = 'SELECT * FROM trainers'
@@ -88,4 +88,4 @@ const getALLTrainer = (req: Request, res: Response, next: NextFunction) => {
   })
 };
 
-export default { createTrainer, getALLTrainer };
+export default { createTrainer, getALLTrainers };
