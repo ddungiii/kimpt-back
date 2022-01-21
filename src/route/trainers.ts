@@ -3,8 +3,13 @@ import controller from '../controller/trainers';
 
 const router = express.Router();
 
-router.get('/check', controller.getALLTrainers);
+// Get informations for All trainers
+router.get('/all', controller.getALLTrainers);
 
-router.post('/update', controller.createTrainer);
+// Get information for Trainer
+router.get('/:id', controller.getTrainer);
+
+// Register Trainer at SignUp
+router.post('/register', controller.createTrainer);
 
 export = router;

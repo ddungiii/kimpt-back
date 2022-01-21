@@ -3,6 +3,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import trainersRoutes from './route/trainers';
 import gymsRoutes from './route/gyms';
+import usersRoutes from './route/users';
 
 const mysql = require('mysql');
 const dbconfig = require('./config/config.ts');
@@ -26,6 +27,7 @@ app.get('/welcome', (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use('/trainers', trainersRoutes);
+app.use('/users', usersRoutes);
 app.use('/gyms', gymsRoutes);
 
 app.listen('443', () => {
