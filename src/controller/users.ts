@@ -134,8 +134,8 @@ const getUser = (req: Request, res: Response, next: NextFunction) => {
 const getUserClass = (req: Request, res:Response, next: NextFunction) => {
   console.log("Getting user`s classes");
 
-  let { user_id } = req.params;
-  let query = `SELECT * FROM class where user_id=${user_id}`;
+  let { id } = req.params;
+  let query = `SELECT * FROM class WHERE user_id=${id}`;
   
   Connect()
   // connection success

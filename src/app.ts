@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import trainersRoutes from './route/trainers';
 import gymsRoutes from './route/gyms';
 import usersRoutes from './route/users';
+import classRoutes from './route/class';
 
 const mysql = require('mysql');
 const dbconfig = require('./config/config.ts');
@@ -29,6 +30,7 @@ app.get('/welcome', (req: Request, res: Response, next: NextFunction) => {
 app.use('/trainers', trainersRoutes);
 app.use('/users', usersRoutes);
 app.use('/gyms', gymsRoutes);
+app.use('/class', classRoutes);
 
 app.listen('443', () => {
     console.log(`
