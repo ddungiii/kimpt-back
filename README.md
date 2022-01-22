@@ -161,6 +161,27 @@ GET /users/:id/class
 }
 ```
 
+ ## Check Vaild User ID
+ #### API
+```http
+GET /users/check/:login_id
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "isValidUserId": 1
+        }
+    ]
+}
+```
+return 1 if validUserID
+
+
+return 0 if inValidUserID
+
 # TRAINERS
 ## Register trainer account
 
@@ -374,6 +395,27 @@ GET /trainers/:id/class/finish
     ]
 }
 ```
+
+ ## Check Vaild Trainer ID
+ #### API
+```http
+GET /trainers/check/:login_id
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "isValidTrainerId": 1
+        }
+    ]
+}
+```
+return 1 if validUserID
+
+
+return 0 if inValidUserID
 
 # GYMS
 ## Register gym
