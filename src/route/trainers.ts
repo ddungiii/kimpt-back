@@ -22,6 +22,9 @@ router.get('/:id/class/finish', controller.getTrainerFinishClass);
 // Check duplicate Trainer ID
 router.get('/check/:login_id', controller.checkTrainerId);
 
+// Get trainer Thumbnail
+router.get('/:id/thumbnail', controller.getTrainerThumbnail);
+
 
 // POST
 // Register Trainer at SignUp

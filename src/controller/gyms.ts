@@ -137,7 +137,7 @@ const getAllGymsInCity = (req: Request, res: Response, next: NextFunction) => {
 
   let { city } = req.params;
 
-  let query = `SELECT * FROM gyms WHERE city=${city}`
+  let query = `SELECT * FROM gyms WHERE city="${city}"`
 
   Connect()
   // connection success

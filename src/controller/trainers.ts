@@ -3,6 +3,7 @@ import { Connect, Query } from '../config/mysql';
 
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 // var storage = multer.diskStorage({
 //   destination: function (req: Request, file: any, callback: (error: Error | null, destination: string) => void) {
@@ -255,7 +256,7 @@ const getTrainerTeachingClass = (req: Request, res:Response, next: NextFunction)
       error
     })
   })
-}
+};
 
 const getTrainerPendingClass = (req: Request, res:Response, next: NextFunction) => {
   console.log("Getting trainer`s pending users");
@@ -298,7 +299,7 @@ const getTrainerPendingClass = (req: Request, res:Response, next: NextFunction) 
       error
     })
   })
-}
+};
 
 const getTrainerFinishClass = (req: Request, res:Response, next: NextFunction) => {
   console.log("Getting trainer`s finish users");
@@ -341,7 +342,7 @@ const getTrainerFinishClass = (req: Request, res:Response, next: NextFunction) =
       error
     })
   })
-}
+};
 
 const checkTrainerId = (req: Request, res:Response, next: NextFunction) => {
   console.log("Check duplicate trainer id");
@@ -384,6 +385,53 @@ const checkTrainerId = (req: Request, res:Response, next: NextFunction) => {
       error
     })
   })
+};
+
+const getTrainerThumbnail = (req: Request, res:Response, next: NextFunction) => {
+  console.log("Getting Trainer Thumbnail");
+
+  let { id } = req.params;
+  let query = `SELECT thumbnail FROM trainers WHERE id="${id}"`;
+  
+  Connect()
+  // connection success
+  .then(connection => {
+    Query(connection, query)
+    // query success
+    .then((result: any) => {
+      const dir = 'public/images'
+      const file = result[0].thumbnail;
+      
+      let test = fs.readFileSync(path.join(__dirname, "../../public/images/", file));
+
+      console.log(test);
+      return res.status(200).json(test);
+    })
+
+    // query error
+    .catch(error => {
+      console.log('query error: ' + error.message);
+
+      return res.status(500).json({
+        message: error.message,
+        error
+      });
+    })
+
+    .finally(() => {
+      connection.end();
+    })
+  })
+
+  // connection error
+  .catch(error => {
+    console.log('connection error: ' + error.message);
+
+    return res.status(500).json({
+      message: error.message,
+      error
+    })
+  })
 }
 
 export default {
@@ -394,5 +442,6 @@ export default {
   getTrainerTeachingClass,
   getTrainerPendingClass,
   getTrainerFinishClass,
-  checkTrainerId
+  checkTrainerId,
+  getTrainerThumbnail
 };
