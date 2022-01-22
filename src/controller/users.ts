@@ -25,7 +25,13 @@ const createUser = (req: Request, res: Response, next: NextFunction) => {
     // query error
     .catch(error => {
       console.log('query error: ' + error.message);
-
+      
+      if (error.errno === 1062){
+        return res.status(200).json({
+          status: "duplicate"
+        })
+      }
+      
       return res.status(500).json({
         message: error.message,
         error
@@ -63,16 +69,13 @@ const loginUser = (req: Request, res: Response, next: NextFunction) => {
     .then((result: any) => {
       if (result.length === 0){
         console.log('query error: No match user account');
-
-        return res.status(500).json({
-          message: 'query error: No match user account',
-        });
       }
-      else {
-        return res.status(200).json({
-          result
-        });
+      else{
+        console.log("Success: Login User");
       }
+      return res.status(200).json({
+        result
+      });
     })
 
     // query error
@@ -230,10 +233,54 @@ const getUserClass = (req: Request, res:Response, next: NextFunction) => {
   })
 }
 
+const checkUserId = (req: Request, res:Response, next: NextFunction) => {
+  console.log("Check duplicate user id");
+
+  let { login_id } = req.params;
+  let query = `SELECT NOT EXISTS (SELECT * FROM users WHERE login_id="${login_id}") as isValidUserId`;
+  
+  Connect()
+  // connection success
+  .then(connection => {
+    Query(connection, query)
+    // query success
+    .then(result => {
+      return res.status(200).json({
+        result
+      })
+    })
+
+    // query error
+    .catch(error => {
+      console.log('query error: ' + error.message);
+
+      return res.status(500).json({
+        message: error.message,
+        error
+      });
+    })
+
+    .finally(() => {
+      connection.end();
+    })
+  })
+
+  // connection error
+  .catch(error => {
+    console.log('connection error: ' + error.message);
+
+    return res.status(500).json({
+      message: error.message,
+      error
+    })
+  })
+}
+
 export default {
   createUser,
   loginUser,
   getALLUsers,
   getUser,
-  getUserClass
+  getUserClass,
+  checkUserId
 };

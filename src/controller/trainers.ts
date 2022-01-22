@@ -1,11 +1,26 @@
 import { NextFunction, Request, Response } from 'express';
 import { Connect, Query } from '../config/mysql';
 
+const multer = require("multer");
+const path = require("path");
+
+// var storage = multer.diskStorage({
+//   destination: function (req: Request, file: any, callback: (error: Error | null, destination: string) => void) {
+//     callback(null, './public/images/trainers/');
+//   },
+//   filename: function (req: Request, file: any, callback: (error: Error | null, filename: string) => void) {
+//     const ext = path.extname(file.originalname);
+//     callback(null, path.basename(file.originalname, ext) + "-" + Date.now() + ext);
+//   }
+// })
+
 // POST
 const createTrainer = (req: Request, res: Response, next: NextFunction) => {
   console.log("Creating trainer");
 
-  let { login_id, login_pw, name, sex, age, thumbnail, instagram, career, intro, gym_city, gym_name } = req.body;
+  let { login_id, login_pw, name, sex, age, instagram, career, intro, gym_city, gym_name } = req.body;
+  // let thumbnail = req.body.thumbnail ? req.body.thumbnail : 
+  let thumbnail = req.body.thumbnail ? req.body.thumbnail : '/public/images/blank_profile.png';
 
   let query = 'INSERT INTO trainers (login_id, login_pw, name, sex, age, thumbnail, instagram, career, intro, gym_id) ';
   query    += `SELECT "${login_id}", "${login_pw}", "${name}", "${sex}", "${age}", "${thumbnail}", "${instagram}", "${career}", "${intro}", id `;
@@ -34,7 +49,13 @@ const createTrainer = (req: Request, res: Response, next: NextFunction) => {
     // query error
     .catch(error => {
       console.log('query error: ' + error.message);
-
+      
+      if (error.errno === 1062){
+        return res.status(200).json({
+          status: "duplicate"
+        })
+      }
+      
       return res.status(500).json({
         message: error.message,
         error
@@ -72,16 +93,13 @@ const loginTrainer = (req: Request, res: Response, next: NextFunction) => {
     .then((result: any) => {
       if (result.length === 0){
         console.log('query error: No match trainer account');
-
-        return res.status(500).json({
-          message: 'query error: No match trainer account',
-        });
       }
-      else {
-        return res.status(200).json({
-          result
-        });
+      else{
+        console.log("Success: Login User");
       }
+      return res.status(200).json({
+        result
+      });
     })
 
     // query error
@@ -325,6 +343,49 @@ const getTrainerFinishClass = (req: Request, res:Response, next: NextFunction) =
   })
 }
 
+const checkTrainerId = (req: Request, res:Response, next: NextFunction) => {
+  console.log("Check duplicate trainer id");
+
+  let { login_id } = req.params;
+  let query = `SELECT NOT EXISTS (SELECT * FROM trainers WHERE login_id="${login_id}") as isValidTrainerId`;
+  
+  Connect()
+  // connection success
+  .then(connection => {
+    Query(connection, query)
+    // query success
+    .then(result => {
+      return res.status(200).json({
+        result
+      })
+    })
+
+    // query error
+    .catch(error => {
+      console.log('query error: ' + error.message);
+
+      return res.status(500).json({
+        message: error.message,
+        error
+      });
+    })
+
+    .finally(() => {
+      connection.end();
+    })
+  })
+
+  // connection error
+  .catch(error => {
+    console.log('connection error: ' + error.message);
+
+    return res.status(500).json({
+      message: error.message,
+      error
+    })
+  })
+}
+
 export default {
   createTrainer,
   loginTrainer,
@@ -332,5 +393,6 @@ export default {
   getTrainer,
   getTrainerTeachingClass,
   getTrainerPendingClass,
-  getTrainerFinishClass
+  getTrainerFinishClass,
+  checkTrainerId
 };

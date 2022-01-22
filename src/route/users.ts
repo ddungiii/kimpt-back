@@ -13,6 +13,9 @@ router.get('/:id', controller.getUser);
 // Get User Class
 router.get('/:id/class', controller.getUserClass);
 
+// Check duplicate User ID
+router.get('/check/:login_id', controller.checkUserId);
+
 // POST
 // Register User at SignUp
 router.post('/register', controller.createUser);

@@ -19,6 +19,9 @@ router.get('/:id/class/pending', controller.getTrainerPendingClass);
 // Get Trainer Teaching Class
 router.get('/:id/class/finish', controller.getTrainerFinishClass);
 
+// Check duplicate Trainer ID
+router.get('/check/:login_id', controller.checkTrainerId);
+
 
 // POST
 // Register Trainer at SignUp
