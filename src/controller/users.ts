@@ -6,10 +6,10 @@ import { Connect, Query } from '../config/mysql';
 const createUser = (req: Request, res: Response, next: NextFunction) => {
   console.log("Creating user");
 
-  let { login_id, login_pw, name, sex, age, career, purpose } = req.body;
+  let { login_id, login_pw, name, sex, age, contact, career, purpose } = req.body;
 
-  let query = 'INSERT INTO users (login_id, login_pw, name, sex, age, career, purpose) ';
-  query += `VALUES ("${login_id}", "${login_pw}", "${name}", "${sex}", "${age}", "${career}", "${purpose}")`;
+  let query = 'INSERT INTO users (login_id, login_pw, name, sex, age, contact, career, purpose) ';
+  query += `VALUES ("${login_id}", "${login_pw}", "${name}", "${sex}", "${age}", "${contact}", "${career}", "${purpose}")`;
 
   Connect()
   // connection success
