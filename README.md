@@ -374,3 +374,146 @@ GET /trainers/:id/class/finish
     ]
 }
 ```
+
+# GYMS
+## Register gym
+
+#### API
+```http
+POST /gyms/register
+```
+#### Body
+```
+{
+    "city": "제천",
+    "name": "아리랑휘트니스"
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 14,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
+}
+```
+
+## Get informations for All Gyms
+
+#### API
+```http
+GET /gyms/all
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "id": 5,
+            "city": "대전",
+            "name": "라라휘트니스"
+        },
+        {
+            "id": 7,
+            "city": "서울",
+            "name": "엑슬휘트니스"
+        },
+        {
+            "id": 10,
+            "city": "포항",
+            "name": "ND피트니스"
+        },
+        {
+            "id": 14,
+            "city": "제천",
+            "name": "아리랑휘트니스"
+        }
+    ]
+}
+```
+
+## Get Cities for All Gyms
+
+#### API
+```http
+GET /gyms/cities
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "city": "서울"
+        },
+        {
+            "city": "대전"
+        },
+        {
+            "city": "포항"
+        },
+        {
+            "city": "제천"
+        }
+    ]
+}
+```
+
+## Get Gyms in City
+
+#### API
+```http
+GET /gyms/:city/all
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "id": 1,
+            "city": "서울",
+            "name": "짐인더하우스"
+        },
+        {
+            "id": 7,
+            "city": "서울",
+            "name": "엑슬휘트니스"
+        },
+        {
+            "id": 8,
+            "city": "서울",
+            "name": "바디플렉스짐"
+        }
+    ]
+}
+```
+
+## Get information for a Gym
+
+#### API
+```http
+GET /gyms/:id
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "id": 2,
+            "city": "대전",
+            "name": "문재엄 헬스"
+        }
+    ]
+}
+```
