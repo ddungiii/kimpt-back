@@ -417,6 +417,30 @@ return 1 if validUserID
 
 return 0 if inValidUserID
 
+ ## Get Trainer Thumbnail
+ #### API
+```http
+GET /trainers/:id/thumbnail
+```
+
+#### Responses
+```
+{
+    "type": "Buffer",
+    "data": [
+        137,
+        80,
+        78,
+        71,
+        13,
+        10,
+        26,
+        ...
+    ]
+}
+```
+In Client, convert buffer to string
+
 # GYMS
 ## Register gym
 
