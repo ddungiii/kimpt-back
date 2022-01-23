@@ -625,3 +625,79 @@ GET /gyms/:id/trainers
 }
 ```
 
+# USER_MEMO
+## Write memo
+
+#### API
+```http
+POST /memo
+```
+#### Body
+```
+{
+    "class_id": 1,
+    "date": "2022-01-23",
+    "content": "민희 회원님 참 잘했어요~"
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
+}
+```
+Create Memo when only status is teaching
+
+## Get Memo by User
+#### API
+```http
+GET /memo/:class_id
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "class_id": 1,
+            "date": "2022-01-23T00:00:00.000Z",
+            "content": "민희 회원님 참 잘했어요~"
+        }
+    ]
+}
+```
+
+
+# CLASS
+## Reduce remaining pt
+
+#### API
+```http
+PUT /class/:class_id/reduce
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 1
+    }
+}
+```
