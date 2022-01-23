@@ -20,6 +20,9 @@ router.get('/:city/all', controller.getAllGymsInCity);
 // Get information for a Gym
 router.get('/:id', controller.getGym);
 
+// Get Trainers By Gym
+router.get('/:id/trainers', controller.getTrainersByGym);
+
 
 
 export = router;

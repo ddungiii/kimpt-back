@@ -1,19 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { Connect, Query } from '../config/mysql';
 
-const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-
-// var storage = multer.diskStorage({
-//   destination: function (req: Request, file: any, callback: (error: Error | null, destination: string) => void) {
-//     callback(null, './public/images/trainers/');
-//   },
-//   filename: function (req: Request, file: any, callback: (error: Error | null, filename: string) => void) {
-//     const ext = path.extname(file.originalname);
-//     callback(null, path.basename(file.originalname, ext) + "-" + Date.now() + ext);
-//   }
-// })
 
 // POST
 const createTrainer = (req: Request, res: Response, next: NextFunction) => {
@@ -21,7 +10,7 @@ const createTrainer = (req: Request, res: Response, next: NextFunction) => {
 
   let { login_id, login_pw, name, sex, age, instagram, career, intro, gym_city, gym_name } = req.body;
   // let thumbnail = req.body.thumbnail ? req.body.thumbnail : 
-  let thumbnail = req.body.thumbnail ? req.body.thumbnail : '/public/images/blank_profile.png';
+  let thumbnail = req.body.thumbnail ? req.body.thumbnail : 'blank_profile.png';
 
   let query = 'INSERT INTO trainers (login_id, login_pw, name, sex, age, thumbnail, instagram, career, intro, gym_id) ';
   query    += `SELECT "${login_id}", "${login_pw}", "${name}", "${sex}", "${age}", "${thumbnail}", "${instagram}", "${career}", "${intro}", id `;
@@ -399,12 +388,10 @@ const getTrainerThumbnail = (req: Request, res:Response, next: NextFunction) => 
     Query(connection, query)
     // query success
     .then((result: any) => {
-      const dir = 'public/images'
       const file = result[0].thumbnail;
       
       let test = fs.readFileSync(path.join(__dirname, "../../public/images/", file));
 
-      console.log(test);
       return res.status(200).json(test);
     })
 
@@ -432,7 +419,58 @@ const getTrainerThumbnail = (req: Request, res:Response, next: NextFunction) => 
       error
     })
   })
-}
+};
+
+
+// PUT
+interface MulterRequest extends Request {
+  file: any;
+};
+
+const updateTrainerThumbnail = (req: Request, res:Response, next: NextFunction) => {
+  console.log("Update Trainer Thumbnail");
+
+  console.log(req.file);
+  let { id } = req.params;
+  const thumbnail = `trainers/thumbnail/${(req as MulterRequest).file.filename}`;
+  let query = `UPDATE trainers SET thumbnail="${thumbnail}" WHERE id=${id}`;
+  
+  Connect()
+  // connection success
+  .then(connection => {
+    Query(connection, query)
+    // query success
+    .then((result: any) => {
+      return res.status(200).json({
+        result
+      })
+    })
+
+    // query error
+    .catch(error => {
+      console.log('query error: ' + error.message);
+
+      return res.status(500).json({
+        message: error.message,
+        error
+      });
+    })
+
+    .finally(() => {
+      connection.end();
+    })
+  })
+
+  // connection error
+  .catch(error => {
+    console.log('connection error: ' + error.message);
+
+    return res.status(500).json({
+      message: error.message,
+      error
+    })
+  })
+};
 
 export default {
   createTrainer,
@@ -443,5 +481,6 @@ export default {
   getTrainerPendingClass,
   getTrainerFinishClass,
   checkTrainerId,
-  getTrainerThumbnail
+  getTrainerThumbnail,
+  updateTrainerThumbnail
 };
