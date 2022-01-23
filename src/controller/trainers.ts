@@ -165,7 +165,7 @@ const getTrainer = (req: Request, res: Response, next: NextFunction) => {
   console.log("Getting trainer");
 
   let { id } = req.params;
-  let query = `SELECT * FROM trainers where id="${id}"`;
+  let query = `SELECT * FROM trainers where id=${id}`;
 
   Connect()
   // connection success
@@ -208,7 +208,7 @@ const getTrainerTeachingClass = (req: Request, res:Response, next: NextFunction)
   console.log("Getting trainer`s teaching classes");
 
   let { id } = req.params;
-  let query = `SELECT * FROM class WHERE trainer_id=${id} and status='teaching'`;
+  let query = `SELECT * FROM class JOIN users ON class.user_id = users.id WHERE trainer_id=${id} and status='teaching'`;
   
   Connect()
   // connection success
@@ -251,7 +251,7 @@ const getTrainerPendingClass = (req: Request, res:Response, next: NextFunction) 
   console.log("Getting trainer`s pending users");
 
   let { id } = req.params;
-  let query = `SELECT * FROM class WHERE trainer_id=${id} and status='pending'`;
+  let query = `SELECT * FROM class JOIN users ON class.user_id = users.id WHERE trainer_id=${id} and status='pending'`;
   
   Connect()
   // connection success
@@ -294,7 +294,7 @@ const getTrainerFinishClass = (req: Request, res:Response, next: NextFunction) =
   console.log("Getting trainer`s finish users");
 
   let { id } = req.params;
-  let query = `SELECT * FROM class WHERE trainer_id=${id} and status='finish'`;
+  let query = `SELECT * FROM class JOIN users ON class.user_id = users.id WHERE trainer_id=${id} and status='finish'`;
   
   Connect()
   // connection success
@@ -388,11 +388,13 @@ const getTrainerThumbnail = (req: Request, res:Response, next: NextFunction) => 
     Query(connection, query)
     // query success
     .then((result: any) => {
-      const file = result[0].thumbnail;
+      // const file = result[0].thumbnail;
       
-      let test = fs.readFileSync(path.join(__dirname, "../../public/images/", file));
+      // let test = fs.readFileSync(path.join(__dirname, "../../public/images/", file));
 
-      return res.status(200).json(test);
+      return res.status(200).json(
+        result
+      );
     })
 
     // query error
@@ -429,10 +431,9 @@ interface MulterRequest extends Request {
 
 const updateTrainerThumbnail = (req: Request, res:Response, next: NextFunction) => {
   console.log("Update Trainer Thumbnail");
-
-  console.log(req.file);
   let { id } = req.params;
-  const thumbnail = `trainers/thumbnail/${(req as MulterRequest).file.filename}`;
+  // const thumbnail = `trainers/thumbnail/${(req as MulterRequest).file.filename}`;
+  let { thumbnail } = req.body;
   let query = `UPDATE trainers SET thumbnail="${thumbnail}" WHERE id=${id}`;
   
   Connect()
