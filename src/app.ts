@@ -6,6 +6,7 @@ import gymsRoutes from './route/gyms';
 import usersRoutes from './route/users';
 import classRoutes from './route/class';
 import memoRoutes from './route/userMemo';
+import reviewRoutes from './route/review';
 
 const mysql = require('mysql');
 const dbconfig = require('./config/config.ts');
@@ -24,6 +25,7 @@ app.use('/users', usersRoutes);
 app.use('/gyms', gymsRoutes);
 app.use('/class', classRoutes);
 app.use('/memo', memoRoutes);
+app.use('/review', reviewRoutes);
 
 app.listen('443', () => {
     console.log(`

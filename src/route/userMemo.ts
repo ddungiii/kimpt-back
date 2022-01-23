@@ -6,7 +6,6 @@ const router = express.Router();
 // Get Memo by User
 router.get('/:class_id', controller.getUserMemo);
 
-
 // Write memo
 router.post('/', controller.createMemo);
 

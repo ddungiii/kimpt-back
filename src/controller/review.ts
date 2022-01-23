@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { Connect, Query } from '../config/mysql';
 
-const createMemo = (req: Request, res: Response, next: NextFunction) => {
-  console.log("Creating Memo");
+const createReview = (req: Request, res: Response, next: NextFunction) => {
+  console.log("Creating Review");
 
-  let { class_id, date, content } = req.body;
+  let { class_id, content, rating } = req.body;
 
-  let query = 'INSERT INTO user_memo (class_id, date, content) ';
-  query += `SELECT ${class_id}, "${date}", "${content}" `;
-  query += `FROM class WHERE id=${class_id} AND status="teaching" `;
+  let query = 'INSERT INTO trainer_review (class_id, content, rating) ';
+  query += `SELECT ${class_id}, "${content}", ${rating} `;
+  query += `FROM class WHERE id=${class_id} AND (status="teaching" OR status="finish") `;
 
   Connect()
   // connection success
@@ -47,12 +47,12 @@ const createMemo = (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-const getUserMemo = (req: Request, res: Response, next: NextFunction) => {
-  console.log("Getting Memo by User");
+const getReviewByTrainer = (req: Request, res: Response, next: NextFunction) => {
+  console.log("Getting Review by Trainer");
 
   let { class_id } = req.params;
 
-  let query = `SELECT * FROM user_memo WHERE class_id=${class_id}`;
+  let query = `SELECT * FROM trainer_review WHERE class_id=${class_id}`;
 
   Connect()
   // connection success
@@ -92,6 +92,6 @@ const getUserMemo = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export default {
-  createMemo,
-  getUserMemo
+  createReview,
+  getReviewByTrainer
 };
