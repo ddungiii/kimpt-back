@@ -417,6 +417,30 @@ return 1 if validUserID
 
 return 0 if inValidUserID
 
+ ## Get Trainer Thumbnail
+ #### API
+```http
+GET /trainers/:id/thumbnail
+```
+
+#### Responses
+```
+{
+    "type": "Buffer",
+    "data": [
+        137,
+        80,
+        78,
+        71,
+        13,
+        10,
+        26,
+        ...
+    ]
+}
+```
+In Client, convert buffer to string
+
 # GYMS
 ## Register gym
 
@@ -557,5 +581,123 @@ GET /gyms/:id
             "name": "문재엄 헬스"
         }
     ]
+}
+```
+
+## Get Trainers by Gym
+
+#### API
+```http
+GET /gyms/:id/trainers
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "id": 20,
+            "login_id": "sm",
+            "login_pw": "sm",
+            "name": "박승민",
+            "sex": "M",
+            "age": 70,
+            "thumbnail": "undefined",
+            "instagram": "ddungiii",
+            "career": "운동 잘합니다",
+            "intro": "몸짱 만들어 드립니다",
+            "gym_id": 4
+        },
+        {
+            "id": 21,
+            "login_id": "sm1",
+            "login_pw": "sm",
+            "name": "박승민12",
+            "sex": "M",
+            "age": 70,
+            "thumbnail": "undefined",
+            "instagram": "ddungiii",
+            "career": "운동 잘합니다",
+            "intro": "몸짱 만들어 드립니다",
+            "gym_id": 4
+        }
+    ]
+}
+```
+
+# USER_MEMO
+## Write memo
+
+#### API
+```http
+POST /memo
+```
+#### Body
+```
+{
+    "class_id": 1,
+    "date": "2022-01-23",
+    "content": "민희 회원님 참 잘했어요~"
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
+}
+```
+Create Memo when only status is teaching
+
+## Get Memo by User
+#### API
+```http
+GET /memo/:class_id
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "class_id": 1,
+            "date": "2022-01-23T00:00:00.000Z",
+            "content": "민희 회원님 참 잘했어요~"
+        }
+    ]
+}
+```
+
+
+# CLASS
+## Reduce remaining pt
+
+#### API
+```http
+PUT /class/:class_id/reduce
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 1
+    }
 }
 ```
