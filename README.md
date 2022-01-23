@@ -583,3 +583,45 @@ GET /gyms/:id
     ]
 }
 ```
+
+## Get Trainers by Gym
+
+#### API
+```http
+GET /gyms/:id/trainers
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "id": 20,
+            "login_id": "sm",
+            "login_pw": "sm",
+            "name": "박승민",
+            "sex": "M",
+            "age": 70,
+            "thumbnail": "undefined",
+            "instagram": "ddungiii",
+            "career": "운동 잘합니다",
+            "intro": "몸짱 만들어 드립니다",
+            "gym_id": 4
+        },
+        {
+            "id": 21,
+            "login_id": "sm1",
+            "login_pw": "sm",
+            "name": "박승민12",
+            "sex": "M",
+            "age": 70,
+            "thumbnail": "undefined",
+            "instagram": "ddungiii",
+            "career": "운동 잘합니다",
+            "intro": "몸짱 만들어 드립니다",
+            "gym_id": 4
+        }
+    ]
+}
+```
+
