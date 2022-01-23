@@ -165,7 +165,7 @@ const getTrainer = (req: Request, res: Response, next: NextFunction) => {
   console.log("Getting trainer");
 
   let { id } = req.params;
-  let query = `SELECT * FROM trainers where id=${id}`;
+  let query = `SELECT * FROM trainers where id="${id}"`;
 
   Connect()
   // connection success
@@ -205,7 +205,7 @@ const getTrainer = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getTrainerTeachingClass = (req: Request, res:Response, next: NextFunction) => {
-  console.log("Getting trainer`s classes");
+  console.log("Getting trainer`s teaching classes");
 
   let { id } = req.params;
   let query = `SELECT * FROM class WHERE trainer_id=${id} and status='teaching'`;

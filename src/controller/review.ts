@@ -7,8 +7,7 @@ const createReview = (req: Request, res: Response, next: NextFunction) => {
   let { class_id, content, rating } = req.body;
 
   let query = 'INSERT INTO trainer_review (class_id, content, rating) ';
-  query += `SELECT ${class_id}, "${content}", ${rating} `;
-  query += `FROM class WHERE id=${class_id} AND (status="teaching" OR status="finish") `;
+  query += `SELECT "${class_id}", "${content}", "${rating}" `;
 
   Connect()
   // connection success
