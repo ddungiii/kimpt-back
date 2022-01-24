@@ -144,7 +144,7 @@ GET /users/:id/trainer/:trainer_id
 {
     "result": [
         {
-            "hasTrainer": 0,
+            "hasTrainer": 1,
             "isMyTrainer": 1,
             "isReviewWrote": 0
         }
