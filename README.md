@@ -674,7 +674,7 @@ GET /gyms/:id/trainers
 }
 ```
 
-# USER_MEMO
+# MEMO
 ## Write memo
 
 #### API
@@ -684,9 +684,9 @@ POST /memo
 #### Body
 ```
 {
-    "class_id": 1,
-    "date": "2022-01-23",
-    "content": "민희 회원님 참 잘했어요~"
+   "user_id": 3, 
+   "date": "2022-01-24", 
+   "content": "잘했어용"
 }
 ```
 
@@ -699,18 +699,24 @@ POST /memo
         "insertId": 0,
         "serverStatus": 2,
         "warningCount": 0,
-        "message": "",
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
         "protocol41": true,
-        "changedRows": 0
+        "changedRows": 1
     }
 }
 ```
-Create Memo when only status is teaching
+OR
+```
+{
+    "status": "invalid memo"
+}
+```
+After write memo, at class remaining_pt reduce 1
 
 ## Get Memo by User
 #### API
 ```http
-GET /memo/:class_id
+GET /memo/:user_id
 ```
 
 #### Responses
@@ -718,9 +724,10 @@ GET /memo/:class_id
 {
     "result": [
         {
-            "class_id": 1,
-            "date": "2022-01-23T00:00:00.000Z",
-            "content": "민희 회원님 참 잘했어요~"
+            "id": 2,
+            "user_id": 15,
+            "date": "2022-01-24T00:00:00.000Z",
+            "content": "잘했어용"
         }
     ]
 }
