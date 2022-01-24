@@ -727,11 +727,91 @@ GET /memo/:class_id
 
 
 # CLASS
+## Apply Class
+
+#### API
+```http
+POST /class/apply
+```
+
+#### Body
+```
+{
+    "trainer_id": 18,
+    "user_id": 16,
+    "day": "wed",
+    "time": 11,
+    "num_pt": 20
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 10,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
+}
+```
+
 ## Reduce remaining pt
 
 #### API
 ```http
 PUT /class/:class_id/reduce
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 1
+    }
+}
+```
+
+## Accept class
+
+#### API
+```http
+PUT /class/:class_id/accept
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 1
+    }
+}
+```
+
+## Deny class
+
+#### API
+```http
+PUT /class/:class_id/deny
 ```
 
 #### Responses
