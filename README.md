@@ -908,3 +908,115 @@ GET /review/:trainer_id
     ]
 }
 ```
+
+# USER_IMAGES
+## Upload user image
+
+#### API
+```http
+POST /images/user/:id/:type
+```
+#### Body
+```
+{
+    "image": "..."
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 2,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
+}
+```
+
+## Get user image
+
+#### API
+```http
+GET /images/user/:id/:type
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "id": 2,
+            "user_id": 4,
+            "type": "inbody",
+            "image": "..."
+        },
+        {
+            "id": 3,
+            "user_id": 4,
+            "type": "inbody",
+            "image": "..."
+        }
+    ]
+}
+```
+
+# TRAINER_IMAGES
+## Upload trainer image
+
+#### API
+```http
+POST /images/trainer/:id
+```
+#### Body
+```
+{
+    "image": "..."
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 2,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
+}
+```
+
+## Get trainer image
+
+#### API
+```http
+GET /images/trainer/:id
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "id": 2,
+            "user_id": 4,
+            "image": "..."
+        },
+        {
+            "id": 3,
+            "user_id": 4,
+            "image": "..."
+        }
+    ]
+}
+```
