@@ -919,7 +919,8 @@ POST /images/user/:id/:type
 #### Body
 ```
 {
-    "image": "..."
+    "image": "...",
+    "date": "2022.01.24"
 }
 ```
 
@@ -954,13 +955,15 @@ GET /images/user/:id/:type
             "id": 2,
             "user_id": 4,
             "type": "inbody",
-            "image": "..."
+            "image": "...",
+            "date": "2022.01.24"
         },
         {
             "id": 3,
             "user_id": 4,
             "type": "inbody",
-            "image": "..."
+            "image": "...",
+             "date": "2022.01.25"
         }
     ]
 }
