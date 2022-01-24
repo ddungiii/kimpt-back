@@ -8,6 +8,7 @@ import classRoutes from './route/class';
 import memoRoutes from './route/userMemo';
 import reviewRoutes from './route/review';
 import userImageRoutes from './route/userImages';
+import trainerImageRoutes from './route/trainerImages';
 
 const mysql = require('mysql');
 const dbconfig = require('./config/config.ts');
@@ -33,6 +34,7 @@ app.use('/class', classRoutes);
 app.use('/memo', memoRoutes);
 app.use('/review', reviewRoutes);
 app.use('/images/user/', userImageRoutes);
+app.use('/images/trainer/', trainerImageRoutes);
 
 app.listen('443', () => {
     console.log(`
