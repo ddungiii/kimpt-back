@@ -1,14 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import { Connect, Query } from '../config/mysql';
 
-const createMemo = (req: Request, res: Response, next: NextFunction) => {
-  console.log("Creating Memo");
+const uploadUserImage = (req: Request, res: Response, next: NextFunction) => {
+  console.log("Upload user image");
 
-  let { user_id, date, content } = req.body;
-
-  let query = 'INSERT INTO user_memo (user_id, date, content) ';
-  query += `SELECT ${user_id}, "${date}", "${content}" `;
-  query += `FROM class WHERE user_id=${user_id} AND status="teaching" `;
+  let { id, type } = req.params;
+  let { image } = req.body;
+  console.log(type);
+  
+  let query = "INSERT INTO user_images (user_id, type, image) ";
+  query    += `VALUES(${id}, "${type}", "${image}") `;
 
   Connect()
   // connection success
@@ -16,27 +17,8 @@ const createMemo = (req: Request, res: Response, next: NextFunction) => {
     Query(connection, query)
     // query success
     .then((result: any) => {
-      if (result.affectedRows === 0){
-        return res.status(200).json({
-          status: "invalid memo"
-        })
-      }
-      query = `UPDATE class SET remaining_pt=remaining_pt-1 `;
-      query+= `WHERE user_id=${user_id};`;
-      
-      Query(connection, query)
-      .then(result => {
-        return res.status(200).json({
-          result
-        })
-      })
-      .catch(error => {
-        console.log('query error: ' + error.message);
-
-        return res.status(500).json({
-          message: error.message,
-          error
-        });
+      return res.status(200).json({
+        result
       })
     })
 
@@ -66,12 +48,13 @@ const createMemo = (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-const getUserMemo = (req: Request, res: Response, next: NextFunction) => {
-  console.log("Getting Memo by User");
+const getUserImage = (req: Request, res: Response, next: NextFunction) => {
+  console.log("Getting user image");
 
-  let { user_id } = req.params;
+  let { id, type } = req.params;
+  console.log(type);
 
-  let query = `SELECT * FROM user_memo WHERE user_id=${user_id}`;
+  let query = `SELECT * FROM user_images WHERE user_id=${id} AND type="${type}"`;
 
   Connect()
   // connection success
@@ -111,6 +94,6 @@ const getUserMemo = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export default {
-  createMemo,
-  getUserMemo
+  uploadUserImage,
+  getUserImage
 };
