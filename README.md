@@ -133,7 +133,7 @@ GET /users/:id
 }
 ```
 
- ## Get IsMyTrainer, IsReviewWrote for user
+ ## Get hasTrainer, IsMyTrainer, IsReviewWrote for user
  #### API
 ```http
 GET /users/:id/trainer/:trainer_id
@@ -144,6 +144,7 @@ GET /users/:id/trainer/:trainer_id
 {
     "result": [
         {
+            "hasTrainer": 0,
             "isMyTrainer": 1,
             "isReviewWrote": 0
         }
