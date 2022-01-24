@@ -1009,12 +1009,12 @@ GET /images/trainer/:id
     "result": [
         {
             "id": 2,
-            "user_id": 4,
+            "trainer_id": 4,
             "image": "..."
         },
         {
             "id": 3,
-            "user_id": 4,
+            "trainer_id": 4,
             "image": "..."
         }
     ]
