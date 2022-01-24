@@ -70,9 +70,9 @@ const createReview = (req: Request, res: Response, next: NextFunction) => {
 const getReviewByTrainer = (req: Request, res: Response, next: NextFunction) => {
   console.log("Getting Review by Trainer");
 
-  let { class_id } = req.params;
+  let { trainer_id } = req.params;
 
-  let query = `SELECT * FROM trainer_review WHERE class_id=${class_id}`;
+  let query = `SELECT * FROM trainer_review WHERE trainer_id=${trainer_id}`;
 
   Connect()
   // connection success

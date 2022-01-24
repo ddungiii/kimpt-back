@@ -9,7 +9,7 @@ router.post('/', controller.createReview);
 
 // POST
 // Get Review by Trainer
-router.get('/:class_id', controller.getReviewByTrainer);
+router.get('/:trainer_id', controller.getReviewByTrainer);
 
 
 
