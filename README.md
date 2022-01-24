@@ -133,6 +133,25 @@ GET /users/:id
 }
 ```
 
+ ## Get hasTrainer, IsMyTrainer, IsReviewWrote for user
+ #### API
+```http
+GET /users/:id/trainer/:trainer_id
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "hasTrainer": 1,
+            "isMyTrainer": 1,
+            "isReviewWrote": 0
+        }
+    ]
+}
+```
+
  ## Get user`s all classes
  #### API
 ```http
@@ -144,18 +163,14 @@ GET /users/:id/class
 {
     "result": [
         {
+            "id": 2,
             "trainer_id": 18,
-            "user_id": 2,
-            "status": "pending",
-            "day": "mon",
-            "time": 13
-        },
-        {
-            "trainer_id": 19,
-            "user_id": 2,
-            "status": "teacing",
-            "day": "mon",
-            "time": 15
+            "user_id": 3,
+            "status": "teaching",
+            "day": "thur",
+            "time": 7,
+            "remaining_pt": 9,
+            "is_review": 1
         }
     ]
 }
@@ -272,11 +287,12 @@ GET /trainers/all
             "name": "김기영",
             "sex": "M",
             "age": 25,
-            "thumbnail": "undefined",
-            "instagram": "undefined",
-            "career": "undefined",
-            "intro": "undefined",
-            "gym_id": 2
+            "thumbnail": "...",
+            "instagram": "ddungiii",
+            "career": "운동 잘합니다",
+            "intro": "몸짱 만들어 드립니다",
+            "gym_id": 2,
+            "rating": 4
         },
         {
             "id": 19,
@@ -285,24 +301,12 @@ GET /trainers/all
             "name": "김민희",
             "sex": "F",
             "age": 40,
-            "thumbnail": "undefined",
-            "instagram": "undefined",
-            "career": "undefined",
-            "intro": "undefined",
-            "gym_id": 3
-        },
-        {
-            "id": 20,
-            "login_id": "sm",
-            "login_pw": "sm",
-            "name": "박승민",
-            "sex": "M",
-            "age": 70,
-            "thumbnail": "undefined",
-            "instagram": "undefined",
-            "career": "undefined",
-            "intro": "undefined",
-            "gym_id": 4
+            "thumbnail": "...",
+            "instagram": "ddungiii",
+            "career": "운동 잘합니다",
+            "intro": "몸짱 만들어 드립니다",
+            "gym_id": 3,
+            "rating": 4.5
         }
     ]
 }
@@ -319,16 +323,19 @@ GET /trainers/:id
 {
     "result": [
         {
-            "id": 2,
-            "login_id": "kimUser",
-            "login_pw": "kimUserpw",
+            "id": 18,
+            "login_id": "kim",
+            "login_pw": "kimpw",
             "name": "김기영",
             "sex": "M",
             "age": 25,
-            "contact": "01012345678",
-            "career": "운동 5년차 입니다",
-            "purpose": "보디빌더입니다"
-        }
+            "thumbnail": "...",
+            "instagram": "ddungiii",
+            "career": "운동 잘합니다",
+            "intro": "몸짱 만들어 드립니다",
+            "gym_id": 2,
+            "rating": 4
+        },
     ]
 }
 ```
@@ -344,17 +351,46 @@ GET /trainers/:id/class/teaching
 {
     "result": [
         {
+            "id": 3,
+            "trainer_id": 18,
+            "user_id": 3,
+            "status": "teaching",
+            "day": "thur",
+            "time": 7,
+            "remaining_pt": 9,
+            "is_review": 1,
+            "login_id": "miniuser",
+            "login_pw": "minipw",
+            "name": "김미니",
+            "sex": "M",
+            "age": 90,
+            "contact": "01023456789",
+            "career": "운동 짱잘합니다",
+            "purpose": "운동 잘해요"
+        },
+        {
+            "id": 4,
             "trainer_id": 18,
             "user_id": 4,
             "status": "teaching",
             "day": "mon",
-            "time": 14
+            "time": 14,
+            "remaining_pt": 6,
+            "is_review": 1,
+            "login_id": "smuser",
+            "login_pw": "sm",
+            "name": "박승민",
+            "sex": "M",
+            "age": 3,
+            "contact": "01032165498",
+            "career": "운동 3년차",
+            "purpose": "평생을 운동했습니다"
         }
     ]
 }
 ```
 
- ## Get Trainer Peding Class
+ ## Get Trainer Pending Class
 #### API
 ```http
 GET /trainers/:id/class/pending
@@ -365,36 +401,27 @@ GET /trainers/:id/class/pending
 {
     "result": [
         {
+            "id": 2,
             "trainer_id": 18,
             "user_id": 2,
             "status": "pending",
             "day": "mon",
-            "time": 13
+            "time": 13,
+            "remaining_pt": 0,
+            "is_review": 0,
+            "login_id": "kimUser",
+            "login_pw": "kimUserpw",
+            "name": "김기영",
+            "sex": "M",
+            "age": 25,
+            "contact": "01012345678",
+            "career": "운동 5년차 입니다",
+            "purpose": "보디빌더입니다"
         }
     ]
 }
 ```
 
- ## Get Trainer Finish Class
-#### API
-```http
-GET /trainers/:id/class/finish
-```
-
-#### Responses
-```
-{
-    "result": [
-        {
-            "trainer_id": 18,
-            "user_id": 5,
-            "status": "finish",
-            "day": "tues",
-            "time": 6
-        }
-    ]
-}
-```
 
  ## Check Vaild Trainer ID
  #### API
@@ -425,21 +452,41 @@ GET /trainers/:id/thumbnail
 
 #### Responses
 ```
+[
+    {
+        "thumbnail": "/9j/4AAQSkZJRgAB..."
+    }
+]
+```
+
+ ## Update trainer thumbnail
+ #### API
+```http
+PUT /trainers/:id/thumbnail
+```
+#### Body
+```
 {
-    "type": "Buffer",
-    "data": [
-        137,
-        80,
-        78,
-        71,
-        13,
-        10,
-        26,
-        ...
-    ]
+    "thumbnail": "..."
 }
 ```
-In Client, convert buffer to string
+
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 1
+    }
+}
+```
 
 # GYMS
 ## Register gym
@@ -602,11 +649,12 @@ GET /gyms/:id/trainers
             "name": "박승민",
             "sex": "M",
             "age": 70,
-            "thumbnail": "undefined",
+            "thumbnail": "...",
             "instagram": "ddungiii",
             "career": "운동 잘합니다",
             "intro": "몸짱 만들어 드립니다",
-            "gym_id": 4
+            "gym_id": 4,
+            "rating": 5
         },
         {
             "id": 21,
@@ -615,17 +663,18 @@ GET /gyms/:id/trainers
             "name": "박승민12",
             "sex": "M",
             "age": 70,
-            "thumbnail": "undefined",
+            "thumbnail": "...",
             "instagram": "ddungiii",
             "career": "운동 잘합니다",
             "intro": "몸짱 만들어 드립니다",
-            "gym_id": 4
+            "gym_id": 4,
+            "rating": 1.2
         }
     ]
 }
 ```
 
-# USER_MEMO
+# MEMO
 ## Write memo
 
 #### API
@@ -635,9 +684,9 @@ POST /memo
 #### Body
 ```
 {
-    "class_id": 1,
-    "date": "2022-01-23",
-    "content": "민희 회원님 참 잘했어요~"
+   "user_id": 3, 
+   "date": "2022-01-24", 
+   "content": "잘했어용"
 }
 ```
 
@@ -650,18 +699,24 @@ POST /memo
         "insertId": 0,
         "serverStatus": 2,
         "warningCount": 0,
-        "message": "",
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
         "protocol41": true,
-        "changedRows": 0
+        "changedRows": 1
     }
 }
 ```
-Create Memo when only status is teaching
+OR
+```
+{
+    "status": "invalid memo"
+}
+```
+After write memo, at class remaining_pt reduce 1
 
 ## Get Memo by User
 #### API
 ```http
-GET /memo/:class_id
+GET /memo/:user_id
 ```
 
 #### Responses
@@ -669,9 +724,10 @@ GET /memo/:class_id
 {
     "result": [
         {
-            "class_id": 1,
-            "date": "2022-01-23T00:00:00.000Z",
-            "content": "민희 회원님 참 잘했어요~"
+            "id": 2,
+            "user_id": 15,
+            "date": "2022-01-24T00:00:00.000Z",
+            "content": "잘했어용"
         }
     ]
 }
@@ -679,6 +735,40 @@ GET /memo/:class_id
 
 
 # CLASS
+## Apply Class
+
+#### API
+```http
+POST /class/apply
+```
+
+#### Body
+```
+{
+    "trainer_id": 18,
+    "user_id": 16,
+    "day": "wed",
+    "time": 11,
+    "num_pt": 20
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 10,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
+}
+```
+
 ## Reduce remaining pt
 
 #### API
@@ -699,5 +789,234 @@ PUT /class/:class_id/reduce
         "protocol41": true,
         "changedRows": 1
     }
+}
+```
+
+## Accept class
+
+#### API
+```http
+PUT /class/:class_id/accept
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 1
+    }
+}
+```
+
+## Deny class
+
+#### API
+```http
+PUT /class/:class_id/deny
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 1
+    }
+}
+```
+
+# REVIEW
+## Write review
+
+#### API
+```http
+POST /review
+```
+#### Body
+```
+{
+    "trainer_id": 18,
+    "user_id": 4,
+    "content": "낫뱃",
+    "rating": 3
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "&Records: 1  Duplicates: 0  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 0
+    }
+}
+```
+OR
+``` 
+{
+    "status": "invalid review"
+}
+```
+IF class doesn`t exist OR is_review=1 OR status!=teaching
+
+
+return status: invalid review
+
+## Get Review by Trainer
+#### API
+```http
+GET /review/:trainer_id
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "id": 1,
+            "trainer_id": 18,
+            "user_id": 3,
+            "content": "최고에요!2",
+            "rating": 5
+        },
+        {
+            "id": 7,
+            "trainer_id": 18,
+            "user_id": 4,
+            "content": "낫뱃",
+            "rating": 3
+        }
+    ]
+}
+```
+
+# USER_IMAGES
+## Upload user image
+
+#### API
+```http
+POST /images/user/:id/:type
+```
+#### Body
+```
+{
+    "image": "..."
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 2,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
+}
+```
+
+## Get user image
+
+#### API
+```http
+GET /images/user/:id/:type
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "id": 2,
+            "user_id": 4,
+            "type": "inbody",
+            "image": "..."
+        },
+        {
+            "id": 3,
+            "user_id": 4,
+            "type": "inbody",
+            "image": "..."
+        }
+    ]
+}
+```
+
+# TRAINER_IMAGES
+## Upload trainer image
+
+#### API
+```http
+POST /images/trainer/:id
+```
+#### Body
+```
+{
+    "image": "..."
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 2,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
+}
+```
+
+## Get trainer image
+
+#### API
+```http
+GET /images/trainer/:id
+```
+
+#### Responses
+```
+{
+    "result": [
+        {
+            "id": 2,
+            "user_id": 4,
+            "image": "..."
+        },
+        {
+            "id": 3,
+            "user_id": 4,
+            "image": "..."
+        }
+    ]
 }
 ```
