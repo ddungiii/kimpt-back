@@ -4,21 +4,41 @@ import { Connect, Query } from '../config/mysql';
 const createReview = (req: Request, res: Response, next: NextFunction) => {
   console.log("Creating Review");
 
-  let { class_id, content, rating } = req.body;
+  let { trainer_id, user_id, content, rating } = req.body;
 
-  let query = "INSERT INTO trainer_review (class_id, content, rating) ";
-  query    += `SELECT ${class_id}, "${content}", ${rating} `;
-  query    += `FROM class WHERE id=${class_id} AND (status="teaching" or status="finish")`
+  let query = "INSERT INTO trainer_review (trainer_id, user_id, content, rating) ";
+  query    += `SELECT ${trainer_id}, ${user_id}, "${content}", ${rating} `;
+  query    += `FROM class WHERE trainer_id=${trainer_id} AND user_id=${user_id} AND is_Review=0 AND (status="teaching")`;
 
   Connect()
   // connection success
   .then(connection => {
     Query(connection, query)
     // query success
-    .then(result => {
-      return res.status(200).json({
-        result
+    .then((result: any) => {
+      if (result.affectedRows === 0){
+        return res.status(200).json({
+          status: "invalid review"
+        })
+      }
+      query = `UPDATE class SET is_review=1 `;
+      query+= `WHERE trainer_id=${trainer_id} AND user_id=${user_id};`;
+      
+      Query(connection, query)
+      .then(result => {
+        return res.status(200).json({
+          result
+        })
       })
+      .catch(error => {
+        console.log('query error: ' + error.message);
+
+        return res.status(500).json({
+          message: error.message,
+          error
+        });
+      })
+      
     })
 
     // query error

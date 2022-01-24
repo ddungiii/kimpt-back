@@ -276,11 +276,56 @@ const checkUserId = (req: Request, res:Response, next: NextFunction) => {
   })
 }
 
+const getIsMyTrainer = (req: Request, res:Response, next: NextFunction) => {
+  console.log("Check IsMyTrainer, Is review wrote");
+
+  let { id, trainer_id } = req.params;
+  let query = `SELECT EXISTS (SELECT * FROM class WHERE user_id="${id}" AND trainer_id=${trainer_id}) as isMyTrainer, `;
+  query    += `EXISTS (SELECT is_review FROM class WHERE user_id="${id}" AND trainer_id=${trainer_id} AND is_review=1) as isReviewWrote`;
+  
+  Connect()
+  // connection success
+  .then(connection => {
+    Query(connection, query)
+    // query success
+    .then(result => {
+      return res.status(200).json({
+        result
+      })
+    })
+
+    // query error
+    .catch(error => {
+      console.log('query error: ' + error.message);
+
+      return res.status(500).json({
+        message: error.message,
+        error
+      });
+    })
+
+    .finally(() => {
+      connection.end();
+    })
+  })
+
+  // connection error
+  .catch(error => {
+    console.log('connection error: ' + error.message);
+
+    return res.status(500).json({
+      message: error.message,
+      error
+    })
+  })
+}
+
 export default {
   createUser,
   loginUser,
   getALLUsers,
   getUser,
   getUserClass,
-  checkUserId
+  checkUserId,
+  getIsMyTrainer
 };

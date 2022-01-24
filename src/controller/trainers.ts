@@ -1,8 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
+import e, { NextFunction, Request, Response } from 'express';
+import { env } from 'process';
 import { Connect, Query } from '../config/mysql';
-
-const path = require("path");
-const fs = require("fs");
 
 // POST
 const createTrainer = (req: Request, res: Response, next: NextFunction) => {
@@ -10,7 +8,7 @@ const createTrainer = (req: Request, res: Response, next: NextFunction) => {
 
   let { login_id, login_pw, name, sex, age, instagram, career, intro, gym_city, gym_name } = req.body;
   // let thumbnail = req.body.thumbnail ? req.body.thumbnail : 
-  let thumbnail = req.body.thumbnail ? req.body.thumbnail : 'blank_profile.png';
+  let thumbnail = req.body.thumbnail ? req.body.thumbnail : process.env.BASE_TRAINER_THUMBNAIL;
 
   let query = 'INSERT INTO trainers (login_id, login_pw, name, sex, age, thumbnail, instagram, career, intro, gym_id) ';
   query    += `SELECT "${login_id}", "${login_pw}", "${name}", "${sex}", "${age}", "${thumbnail}", "${instagram}", "${career}", "${intro}", id `;
@@ -290,49 +288,6 @@ const getTrainerPendingClass = (req: Request, res:Response, next: NextFunction) 
   })
 };
 
-const getTrainerFinishClass = (req: Request, res:Response, next: NextFunction) => {
-  console.log("Getting trainer`s finish users");
-
-  let { id } = req.params;
-  let query = `SELECT * FROM class JOIN users ON class.user_id = users.id WHERE trainer_id=${id} and status='finish'`;
-  
-  Connect()
-  // connection success
-  .then(connection => {
-    Query(connection, query)
-    // query success
-    .then(result => {
-      return res.status(200).json({
-        result
-      })
-    })
-
-    // query error
-    .catch(error => {
-      console.log('query error: ' + error.message);
-
-      return res.status(500).json({
-        message: error.message,
-        error
-      });
-    })
-
-    .finally(() => {
-      connection.end();
-    })
-  })
-
-  // connection error
-  .catch(error => {
-    console.log('connection error: ' + error.message);
-
-    return res.status(500).json({
-      message: error.message,
-      error
-    })
-  })
-};
-
 const checkTrainerId = (req: Request, res:Response, next: NextFunction) => {
   console.log("Check duplicate trainer id");
 
@@ -388,10 +343,6 @@ const getTrainerThumbnail = (req: Request, res:Response, next: NextFunction) => 
     Query(connection, query)
     // query success
     .then((result: any) => {
-      // const file = result[0].thumbnail;
-      
-      // let test = fs.readFileSync(path.join(__dirname, "../../public/images/", file));
-
       return res.status(200).json(
         result
       );
@@ -423,17 +374,11 @@ const getTrainerThumbnail = (req: Request, res:Response, next: NextFunction) => 
   })
 };
 
-
-// PUT
-interface MulterRequest extends Request {
-  file: any;
-};
-
 const updateTrainerThumbnail = (req: Request, res:Response, next: NextFunction) => {
   console.log("Update Trainer Thumbnail");
   let { id } = req.params;
-  // const thumbnail = `trainers/thumbnail/${(req as MulterRequest).file.filename}`;
   let { thumbnail } = req.body;
+
   let query = `UPDATE trainers SET thumbnail="${thumbnail}" WHERE id=${id}`;
   
   Connect()
@@ -473,6 +418,8 @@ const updateTrainerThumbnail = (req: Request, res:Response, next: NextFunction) 
   })
 };
 
+
+
 export default {
   createTrainer,
   loginTrainer,
@@ -480,7 +427,6 @@ export default {
   getTrainer,
   getTrainerTeachingClass,
   getTrainerPendingClass,
-  getTrainerFinishClass,
   checkTrainerId,
   getTrainerThumbnail,
   updateTrainerThumbnail
