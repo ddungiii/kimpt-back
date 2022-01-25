@@ -197,6 +197,36 @@ return 1 if validUserID
 
 return 0 if inValidUserID
 
+ ## Update user
+ #### API
+```http
+PUT /users/:id
+```
+#### Body
+```
+{
+    "contact": "01098765432",
+    "career": "운동하자",
+    "purpose": "운동해요"
+}
+```
+
+#### Response
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 1
+    }
+}
+```
+
 # TRAINERS
 ## Register trainer account
 
@@ -480,6 +510,39 @@ PUT /trainers/:id/thumbnail
         "affectedRows": 1,
         "insertId": 0,
         "serverStatus": 2,
+        "warningCount": 0,
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 1
+    }
+}
+```
+
+ ## Update trainer
+ #### API
+```http
+PUT /trainers/:id
+```
+#### Body
+```
+{
+    "instagram": "ddddungiii",
+    "career": "운동하자",
+    "intro": "나와함께",
+    "gym_city": "서울",
+    "gym_name": "짐인더하우스"
+}
+```
+
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 34,
         "warningCount": 0,
         "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
         "protocol41": true,
@@ -919,7 +982,8 @@ POST /images/user/:id/:type
 #### Body
 ```
 {
-    "image": "..."
+    "image": "...",
+    "date": "2022.01.24"
 }
 ```
 
@@ -954,15 +1018,46 @@ GET /images/user/:id/:type
             "id": 2,
             "user_id": 4,
             "type": "inbody",
-            "image": "..."
+            "image": "...",
+            "date": "2022.01.24"
         },
         {
             "id": 3,
             "user_id": 4,
             "type": "inbody",
-            "image": "..."
+            "image": "...",
+             "date": "2022.01.25"
         }
     ]
+}
+```
+
+## Delete user image
+
+#### API
+```http
+DELETE /images/user
+```
+#### Body
+```
+{
+    "image": "...",
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 34,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
 }
 ```
 
@@ -1009,14 +1104,43 @@ GET /images/trainer/:id
     "result": [
         {
             "id": 2,
-            "user_id": 4,
+            "trainer_id": 4,
             "image": "..."
         },
         {
             "id": 3,
-            "user_id": 4,
+            "trainer_id": 4,
             "image": "..."
         }
     ]
+}
+```
+
+## Delete Trainer image
+
+#### API
+```http
+DELETE /images/trainer
+```
+#### Body
+```
+{
+    "image": "...",
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 34,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
 }
 ```
