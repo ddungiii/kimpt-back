@@ -197,6 +197,36 @@ return 1 if validUserID
 
 return 0 if inValidUserID
 
+ ## Update user
+ #### API
+```http
+PUT /users/:id
+```
+#### Body
+```
+{
+    "contact": "01098765432",
+    "career": "운동하자",
+    "purpose": "운동해요"
+}
+```
+
+#### Response
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 2,
+        "warningCount": 0,
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 1
+    }
+}
+```
+
 # TRAINERS
 ## Register trainer account
 
@@ -480,6 +510,39 @@ PUT /trainers/:id/thumbnail
         "affectedRows": 1,
         "insertId": 0,
         "serverStatus": 2,
+        "warningCount": 0,
+        "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+        "protocol41": true,
+        "changedRows": 1
+    }
+}
+```
+
+ ## Update trainer
+ #### API
+```http
+PUT /trainers/:id
+```
+#### Body
+```
+{
+    "instagram": "ddddungiii",
+    "career": "운동하자",
+    "intro": "나와함께",
+    "gym_city": "서울",
+    "gym_name": "짐인더하우스"
+}
+```
+
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 34,
         "warningCount": 0,
         "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
         "protocol41": true,
