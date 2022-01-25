@@ -969,6 +969,35 @@ GET /images/user/:id/:type
 }
 ```
 
+## Delete user image
+
+#### API
+```http
+DELETE /images/user
+```
+#### Body
+```
+{
+    "image": "...",
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 34,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
+}
+```
+
 # TRAINER_IMAGES
 ## Upload trainer image
 
@@ -1021,5 +1050,34 @@ GET /images/trainer/:id
             "image": "..."
         }
     ]
+}
+```
+
+## Delete Trainer image
+
+#### API
+```http
+DELETE /images/trainer
+```
+#### Body
+```
+{
+    "image": "...",
+}
+```
+
+#### Responses
+```
+{
+    "result": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "serverStatus": 34,
+        "warningCount": 0,
+        "message": "",
+        "protocol41": true,
+        "changedRows": 0
+    }
 }
 ```
