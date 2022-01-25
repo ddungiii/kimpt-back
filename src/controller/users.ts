@@ -104,7 +104,7 @@ const loginUser = (req: Request, res: Response, next: NextFunction) => {
   })
 };
 
-//GET
+// GET
 const getALLUsers = (req: Request, res: Response, next: NextFunction) => {
   console.log("Getting all users");
 
@@ -322,6 +322,53 @@ const getIsMyTrainer = (req: Request, res:Response, next: NextFunction) => {
   })
 }
 
+// PUT
+const updateUser = (req: Request, res:Response, next: NextFunction) => {
+  console.log("Update User");
+  let { id } = req.params;
+  let { contact, career, purpose } = req.body;
+
+  let query = `UPDATE users `;
+  query    += `SET contact="${contact}", career="${career}", purpose="${purpose}" `;
+  query    += `WHERE id=${id}`;
+  
+  Connect()
+  // connection success
+  .then(connection => {
+    Query(connection, query)
+    // query success
+    .then((result: any) => {
+      return res.status(200).json({
+        result
+      })
+    })
+
+    // query error
+    .catch(error => {
+      console.log('query error: ' + error.message);
+
+      return res.status(500).json({
+        message: error.message,
+        error
+      });
+    })
+
+    .finally(() => {
+      connection.end();
+    })
+  })
+
+  // connection error
+  .catch(error => {
+    console.log('connection error: ' + error.message);
+
+    return res.status(500).json({
+      message: error.message,
+      error
+    })
+  })
+};
+
 export default {
   createUser,
   loginUser,
@@ -329,5 +376,6 @@ export default {
   getUser,
   getUserClass,
   checkUserId,
-  getIsMyTrainer
+  getIsMyTrainer,
+  updateUser
 };

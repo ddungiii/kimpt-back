@@ -11,4 +11,9 @@ router.get('/:id', controller.getTrainerImage);
 // Upload Trainer Image
 router.post('/:id', controller.uploadTrainerImage);
 
+// DELETE
+// Delete Trainer Image
+router.delete('/', controller.deleteTrainerImage);
+
+
 export = router;

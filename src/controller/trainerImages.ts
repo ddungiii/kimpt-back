@@ -91,7 +91,52 @@ const getTrainerImage = (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
+const deleteTrainerImage = (req: Request, res: Response, next: NextFunction) => {
+  console.log("Delete trainer image");
+  
+  let { image } = req.body;
+
+  let query = `DELETE FROM trainer_images WHERE image="${image}"`;
+
+  Connect()
+  // connection success
+  .then(connection => {
+    Query(connection, query)
+    // query success
+    .then(result => {
+      return res.status(200).json({
+        result
+      })
+    })
+
+    // query error
+    .catch(error => {
+      console.log('query error: ' + error.message);
+
+      return res.status(500).json({
+        message: error.message,
+        error
+      });
+    })
+
+    .finally(() => {
+      connection.end();
+    })
+  })
+
+  // connection error
+  .catch(error => {
+    console.log('connection error: ' + error.message);
+
+    return res.status(500).json({
+      message: error.message,
+      error
+    })
+  });
+};
+
 export default {
   uploadTrainerImage,
-  getTrainerImage
+  getTrainerImage,
+  deleteTrainerImage
 };

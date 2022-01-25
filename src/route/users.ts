@@ -19,11 +19,17 @@ router.get('/check/:login_id', controller.checkUserId);
 // Get IsMyTrainer, IsReviewWrote
 router.get('/:id/trainer/:trainer_id', controller.getIsMyTrainer);
 
+
 // POST
 // Register User at SignUp
 router.post('/register', controller.createUser);
 
 // Login Trainer
 router.post('/login', controller.loginUser);
+
+
+// PUT
+// Update user
+router.put('/:id', controller.updateUser);
 
 export = router;

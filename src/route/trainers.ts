@@ -33,4 +33,7 @@ router.post('/login', controller.loginTrainer);
 // Update trainer Thumbnail
 router.put('/:id/thumbnail', controller.updateTrainerThumbnail);
 
+// Update trainer
+router.put('/:id', controller.updateTrainer);
+
 export = router;

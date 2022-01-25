@@ -418,6 +418,52 @@ const updateTrainerThumbnail = (req: Request, res:Response, next: NextFunction) 
   })
 };
 
+const updateTrainer = (req: Request, res:Response, next: NextFunction) => {
+  console.log("Update Trainer");
+  let { id } = req.params;
+  let { instagram, career, intro, gym_city, gym_name } = req.body;
+
+  let query = `UPDATE trainers `;
+  query    += `SET instagram="${instagram}", career="${career}", intro="${intro}", gym_id=(SELECT id FROM gyms WHERE city="${gym_city}" AND name="${gym_name}") `;
+  query    += `WHERE id=${id}`;
+  
+  Connect()
+  // connection success
+  .then(connection => {
+    Query(connection, query)
+    // query success
+    .then((result: any) => {
+      return res.status(200).json({
+        result
+      })
+    })
+
+    // query error
+    .catch(error => {
+      console.log('query error: ' + error.message);
+
+      return res.status(500).json({
+        message: error.message,
+        error
+      });
+    })
+
+    .finally(() => {
+      connection.end();
+    })
+  })
+
+  // connection error
+  .catch(error => {
+    console.log('connection error: ' + error.message);
+
+    return res.status(500).json({
+      message: error.message,
+      error
+    })
+  })
+};
+
 
 
 export default {
@@ -429,5 +475,6 @@ export default {
   getTrainerPendingClass,
   checkTrainerId,
   getTrainerThumbnail,
-  updateTrainerThumbnail
+  updateTrainerThumbnail,
+  updateTrainer
 };

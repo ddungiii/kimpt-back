@@ -11,4 +11,8 @@ router.get('/:id/:type', controller.getUserImage);
 // Upload User Image
 router.post('/:id/:type', controller.uploadUserImage);
 
+// DELETE
+// Delete User Image
+router.delete('/', controller.deleteUserImage);
+
 export = router;
