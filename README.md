@@ -389,14 +389,7 @@ GET /trainers/:id/class/teaching
             "time": 7,
             "remaining_pt": 9,
             "is_review": 1,
-            "login_id": "miniuser",
-            "login_pw": "minipw",
-            "name": "김미니",
-            "sex": "M",
-            "age": 90,
-            "contact": "01023456789",
-            "career": "운동 짱잘합니다",
-            "purpose": "운동 잘해요"
+            "name": "김미니"
         },
         {
             "id": 4,
@@ -407,14 +400,7 @@ GET /trainers/:id/class/teaching
             "time": 14,
             "remaining_pt": 6,
             "is_review": 1,
-            "login_id": "smuser",
-            "login_pw": "sm",
-            "name": "박승민",
-            "sex": "M",
-            "age": 3,
-            "contact": "01032165498",
-            "career": "운동 3년차",
-            "purpose": "평생을 운동했습니다"
+            "name": "박승민"
         }
     ]
 }
@@ -431,22 +417,15 @@ GET /trainers/:id/class/pending
 {
     "result": [
         {
-            "id": 2,
+            "id": 18,
             "trainer_id": 18,
-            "user_id": 2,
+            "user_id": 21,
             "status": "pending",
-            "day": "mon",
-            "time": 13,
-            "remaining_pt": 0,
+            "day": "wed",
+            "time": 15,
+            "remaining_pt": 30,
             "is_review": 0,
-            "login_id": "kimUser",
-            "login_pw": "kimUserpw",
-            "name": "김기영",
-            "sex": "M",
-            "age": 25,
-            "contact": "01012345678",
-            "career": "운동 5년차 입니다",
-            "purpose": "보디빌더입니다"
+            "name": "냠"
         }
     ]
 }
