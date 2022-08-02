@@ -1,7 +1,4 @@
 # KIM PT(김피티) BACK
- ```
- http://192.249.18.145:443
- ```
  
 # USERS
 ## Register user account
